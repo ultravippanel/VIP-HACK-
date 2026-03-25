@@ -1,109 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>VIP PANEL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP Color Trading Prediction Panel</title>
 
 <style>
 body {
-  background: black;
-  color: white;
-  font-family: Arial;
-  text-align: center;
+    font-family: Arial;
+    background: linear-gradient(135deg,#0c0c0c,#1a1a2e,#16213e);
+    color: white;
+}
+
+/* HEADER */
+h1 {
+    color: gold;
+    text-shadow: 0 0 20px gold;
 }
 
 /* BOX */
 .stat-card {
-  background: rgba(0,0,0,0.9);
-  padding: 20px;
-  margin: 15px;
-  border-radius: 15px;
-  border: 2px solid gold;
-  box-shadow: 0 0 20px gold;
+    background: rgba(0,0,0,0.9);
+    padding: 20px;
+    margin: 15px;
+    border-radius: 20px;
+    border: 2px solid gold;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255,215,0,0.4);
 }
 
-/* VALUE (BIG TEXT) */
+/* VALUE TEXT (MAIN FIX) */
 .stat-value {
-  font-size: 40px;
-  color: white;
-  text-shadow: 0 0 15px white;
+    font-size: 45px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 15px #ffffff, 0 0 25px #00ffff;
 }
 
-/* LABEL */
+/* LABEL TEXT */
 .stat-label {
-  color: gold;
+    color: #ffd700;
+    font-size: 16px;
+    text-shadow: 0 0 10px gold;
 }
+
+/* COLOR TEXT */
+.red { color: #ff4d4d; text-shadow: 0 0 20px red; }
+.green { color: #00ff99; text-shadow: 0 0 20px #00ff99; }
+.violet { color: #bb66ff; text-shadow: 0 0 20px violet; }
 
 /* TIMER */
-#timer {
-  font-size: 50px;
-  margin-top: 20px;
-  color: gold;
+.timer {
+    font-size: 50px;
+    text-align: center;
+    margin: 20px;
+    color: gold;
+    text-shadow: 0 0 20px gold;
 }
 
-/* PREDICTION */
-#prediction {
-  font-size: 50px;
-  margin-top: 20px;
-  text-shadow: 0 0 20px white;
+/* PREDICTION BOX */
+.prediction-display {
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    text-shadow: 0 0 20px white, 0 0 40px cyan;
 }
+
 </style>
-
 </head>
 
 <body>
 
-<h1 style="color:gold;">VIP COLOR PREDICTION</h1>
+<h1 style="text-align:center;">VIP COLOR PREDICTION</h1>
 
 <div class="stat-card">
-  <div class="stat-value" id="number">0</div>
-  <div class="stat-label">CURRENT NUMBER</div>
+    <div class="stat-value" id="currentNumber">0</div>
+    <div class="stat-label">CURRENT NUMBER</div>
 </div>
 
 <div class="stat-card">
-  <div class="stat-value" id="color">-</div>
-  <div class="stat-label">RESULT COLOR</div>
+    <div class="stat-value" id="currentColor">-</div>
+    <div class="stat-label">RESULT COLOR</div>
 </div>
 
 <div class="stat-card">
-  <div class="stat-value" id="round">0</div>
-  <div class="stat-label">TOTAL ROUNDS</div>
+    <div class="stat-value" id="totalRounds">0</div>
+    <div class="stat-label">TOTAL ROUNDS</div>
 </div>
 
-<div id="timer">30</div>
+<div class="stat-card">
+    <div class="stat-value" id="accuracy">100%</div>
+    <div class="stat-label">PREDICTION ACCURACY</div>
+</div>
 
-<div id="prediction">WAIT...</div>
+<div class="timer" id="timer">30</div>
+
+<div class="prediction-display" id="predictionDisplay">WAIT...</div>
 
 <script>
-let time = 30;
-let round = 0;
+let timeLeft = 30;
+let totalRounds = 0;
+let correct = 0;
 
 function getColor(n){
-  if(n==0||n==5) return "VIOLET";
-  if([1,3,7,9].includes(n)) return "RED";
-  return "GREEN";
+    if(n==0||n==5) return "VIOLET";
+    if([1,3,7,9].includes(n)) return "RED";
+    return "GREEN";
 }
 
 function newRound(){
-  let num = Math.floor(Math.random()*10);
-  let color = getColor(num);
+    let num = Math.floor(Math.random()*10);
+    let color = getColor(num);
 
-  document.getElementById("number").innerText = num;
-  document.getElementById("color").innerText = color;
-  document.getElementById("round").innerText = ++round;
+    document.getElementById("currentNumber").innerText = num;
+    document.getElementById("currentColor").innerText = color;
 
-  let predict = ["RED","GREEN","VIOLET"];
-  document.getElementById("prediction").innerText =
-    predict[Math.floor(Math.random()*3)];
+    let colorClass = color.toLowerCase();
+    document.getElementById("currentColor").className = "stat-value "+colorClass;
+
+    totalRounds++;
+    document.getElementById("totalRounds").innerText = totalRounds;
+
+    let predictArr = ["RED","GREEN","VIOLET"];
+    let predict = predictArr[Math.floor(Math.random()*3)];
+
+    document.getElementById("predictionDisplay").innerText = predict;
+    document.getElementById("predictionDisplay").className =
+        "prediction-display "+predict.toLowerCase();
+
+    if(predict===color) correct++;
+
+    let acc = Math.round((correct/totalRounds)*100);
+    document.getElementById("accuracy").innerText = acc+"%";
 }
 
 setInterval(()=>{
-  time--;
-  document.getElementById("timer").innerText = time;
+    timeLeft--;
+    document.getElementById("timer").innerText = timeLeft;
 
-  if(time<=0){
-    time = 30;
-    newRound();
-  }
+    if(timeLeft<=0){
+        timeLeft = 30;
+        newRound();
+    }
 },1000);
 </script>
 
