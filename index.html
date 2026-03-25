@@ -1,150 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIP Color Trading Prediction Panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Color Trading Prediction Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body {
-    font-family: Arial;
-    background: linear-gradient(135deg,#0c0c0c,#1a1a2e,#16213e);
-    color: white;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-/* HEADER */
-h1 {
-    color: gold;
-    text-shadow: 0 0 20px gold;
-}
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0c0c0c 70%);
+        }
 
-/* BOX */
-.stat-card {
-    background: rgba(0,0,0,0.9);
-    padding: 20px;
-    margin: 15px;
-    border-radius: 20px;
-    border: 2px solid gold;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(255,215,0,0.4);
-}
+        .login-box {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid #ffd700;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
 
-/* VALUE TEXT (MAIN FIX) */
-.stat-value {
-    font-size: 45px;
+        @keyframes glow {
+            from { box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 25px 50px rgba(255, 215, 0, 0.6); }
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px #ffd700;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            color: #ffd700;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px #ffd700;
+        }
+
+        .header p {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-value {
+    font-size: 3rem;
     font-weight: bold;
-    color: #ffffff;
-    text-shadow: 0 0 15px #ffffff, 0 0 25px #00ffff;
-}
+    margin-bottom: 0.5rem;
+    color: #00ff00; /* GREEN */
+    text-shadow: 0 0 10px #00ff00;
+        }
+        .stat-label {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
 
-/* LABEL TEXT */
-.stat-label {
-    color: #ffd700;
-    font-size: 16px;
-    text-shadow: 0 0 10px gold;
-}
+        .red { color: #ff4444; text-shadow: 0 0 20px #ff4444; }
+        .green { color: #44ff44; text-shadow: 0 0 20px #44ff44; }
+        .violet { color: #aa44ff; text-shadow: 0 0 20px #aa44ff; }
 
-/* COLOR TEXT */
-.red { color: #ff4d4d; text-shadow: 0 0 20px red; }
-.green { color: #00ff99; text-shadow: 0 0 20px #00ff99; }
-.violet { color: #bb66ff; text-shadow: 0 0 20px violet; }
+        .timer {
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 2rem 0;
+            color: #ffd700;
+            text-shadow: 0 0 30px #ffd700;
+        }
 
-/* TIMER */
-.timer {
-    font-size: 50px;
-    text-align: center;
-    margin: 20px;
-    color: gold;
-    text-shadow: 0 0 20px gold;
-}
+        .prediction-panel {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 3rem;
+            border-radius: 25px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+        }
 
-/* PREDICTION BOX */
-.prediction-display {
-    font-size: 60px;
-    text-align: center;
-    margin-top: 20px;
-    color: white;
-    text-shadow: 0 0 20px white, 0 0 40px cyan;
-}
+        .prediction-display {
+            font-size: 6rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 2rem 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            transition: all 0.5s ease;
+        }
 
-</style>
+        .logout-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ffd700;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .prime-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .prediction-display { font-size: 4rem; }
+            .timer { font-size: 3rem; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="logo">VIP TRADING</div>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" maxlength="20">
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" maxlength="20">
+            </div>
+            <button class="login-btn" onclick="login()">VIP ACCESS</button>
+        </div>
+    </div>
 
-<h1 style="text-align:center;">VIP COLOR PREDICTION</h1>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <button class="logout-btn" onclick="logout()">LOGOUT</button>
+        
+        <div class="header">
+            <h1>VIP COLOR PREDICTION</h1>
+            <p>Real-time Trading Signals • 30s Cycle</p>
+        </div>
 
-<div class="stat-card">
-    <div class="stat-value" id="currentNumber">0</div>
-    <div class="stat-label">CURRENT NUMBER</div>
-</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="currentNumber">-</div>
+                <div class="stat-label">CURRENT NUMBER</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="currentColor">-</div>
+                <div class="stat-label">RESULT COLOR</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalRounds">0</div>
+                <div class="stat-label">TOTAL ROUNDS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="accuracy">100%</div>
+                <div class="stat-label">PREDICTION ACCURACY</div>
+            </div>
+        </div>
 
-<div class="stat-card">
-    <div class="stat-value" id="currentColor">-</div>
-    <div class="stat-label">RESULT COLOR</div>
-</div>
+        <div class="timer" id="timer">30</div>
 
-<div class="stat-card">
-    <div class="stat-value" id="totalRounds">0</div>
-    <div class="stat-label">TOTAL ROUNDS</div>
-</div>
+        <div class="prediction-panel">
+            <div id="predictionText">Waiting for next round...</div>
+            <div class="prediction-display" id="predictionDisplay">
+                🎯 NEXT PREDICTION
+            </div>
+            <div id="primeIndicator" style="text-align: center;"></div>
+        </div>
+    </div>
 
-<div class="stat-card">
-    <div class="stat-value" id="accuracy">100%</div>
-    <div class="stat-label">PREDICTION ACCURACY</div>
-</div>
+    <script>
+        let timeLeft = 30;
+        let isLoggedIn = false;
+        let totalRounds = 0;
+        let correctPredictions = 0;
+        let currentGameNumber = 0;
+        let nextPrediction = '';
+        let intervalId;
+        let gameIntervalId;
 
-<div class="timer" id="timer">30</div>
+        // Demo credentials
+        const demoCredentials = {
+            'vipuser': 'vip123',
+            'admin': 'admin123',
+            'trader': 'trade456'
+        };
 
-<div class="prediction-display" id="predictionDisplay">WAIT...</div>
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
 
-<script>
-let timeLeft = 30;
-let totalRounds = 0;
-let correct = 0;
+            if (demoCredentials[username] && demoCredentials[username] === password) {
+                isLoggedIn = true;
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                startGame();
+            } else {
+                alert('❌ Invalid credentials! Try: vipuser/vip123, admin/admin123, trader/trade456');
+            }
+        }
 
-function getColor(n){
-    if(n==0||n==5) return "VIOLET";
-    if([1,3,7,9].includes(n)) return "RED";
-    return "GREEN";
-}
+        function logout() {
+            isLoggedIn = false;
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            clearInterval(intervalId);
+            clearInterval(gameIntervalId);
+        }
 
-function newRound(){
-    let num = Math.floor(Math.random()*10);
-    let color = getColor(num);
+        function isPrime(n) {
+            if (n <= 1) return false;
+            if (n <= 3) return true;
+            if (n % 2 === 0 || n % 3 === 0) return false;
+            for (let i = 5; i * i <= n; i += 6) {
+                if (n % i === 0 || n % (i + 2) === 0) return false;
+            }
+            return true;
+        }
 
-    document.getElementById("currentNumber").innerText = num;
-    document.getElementById("currentColor").innerText = color;
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 10);
+        }
 
-    let colorClass = color.toLowerCase();
-    document.getElementById("currentColor").className = "stat-value "+colorClass;
+        function getColor(number) {
+            if (number === 0 || number === 5) return 'VIOLET';
+            if ([1, 3, 7, 9].includes(number)) return 'RED';
+            return 'GREEN';
+        }
 
-    totalRounds++;
-    document.getElementById("totalRounds").innerText = totalRounds;
+        function generatePrediction() {
+            const possibilities = ['RED', 'GREEN', 'VIOLET'];
+            return possibilities[Math.floor(Math.random() * 3)];
+        }
 
-    let predictArr = ["RED","GREEN","VIOLET"];
-    let predict = predictArr[Math.floor(Math.random()*3)];
+        function updateDisplay() {
+            const display = document.getElementById('predictionDisplay');
+            const predictionText = document.getElementById('predictionText');
+            const primeIndicator = document.getElementById('primeIndicator');
 
-    document.getElementById("predictionDisplay").innerText = predict;
-    document.getElementById("predictionDisplay").className =
-        "prediction-display "+predict.toLowerCase();
+            // Show prediction with animation
+            display.textContent = nextPrediction;
+            display.className = 'prediction-display';
+            
+            if (nextPrediction === 'RED') {
+                display.classList.add('red');
+                predictionText.textContent = '🔴 PREDICTED: RED';
+            } else if (nextPrediction === 'GREEN') {
+                display.classList.add('green');
+                predictionText.textContent = '🟢 PREDICTED: GREEN';
+            } else {
+                display.classList.add('violet');
+                predictionText.textContent = '🟣 PREDICTED: VIOLET';
+            }
 
-    if(predict===color) correct++;
+            // Check if prime
+            if (isPrime(currentGameNumber)) {
+                primeIndicator.innerHTML = '<div class="prime-badge">⭐ PRIME NUMBER DETECTED ⭐</div>';
+            } else {
+                primeIndicator.innerHTML = '';
+            }
+        }
 
-    let acc = Math.round((correct/totalRounds)*100);
-    document.getElementById("accuracy").innerText = acc+"%";
-}
+        function startRound() {
+            // Generate new game number and prediction
+            currentGameNumber = getRandomNumber();
+            const actualColor = getColor(currentGameNumber);
+            
+            // Generate prediction (random for demo)
+            nextPrediction = generatePrediction();
+            
+            // Update displays
+            document.getElementById('currentNumber').textContent = currentGameNumber;
+            document.getElementById('currentColor').textContent = actualColor;
+            document.getElementById('totalRounds').textContent = ++totalRounds;
 
-setInterval(()=>{
-    timeLeft--;
-    document.getElementById("timer").innerText = timeLeft;
+            // Check prediction accuracy
+            if (nextPrediction === actualColor) {
+                correctPredictions++;
+            }
+            const accuracy = totalRounds > 0 ? Math.round((correctPredictions / totalRounds) * 100) : 100;
+            document.getElementById('accuracy').textContent = accuracy + '%';
 
-    if(timeLeft<=0){
-        timeLeft = 30;
-        newRound();
-    }
-},1000);
-</script>
+            updateDisplay();
+        }
 
+        function startGame() {
+            timeLeft = 30;
+            updateTimer();
+            intervalId = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                
+                if (timeLeft <= 0) {
+                    timeLeft = 30;
+                    startRound();
+                }
+            }, 1000);
+
+            // Auto refresh every 30 seconds
+            gameIntervalId = setInterval(startRound, 30000);
+        }
+
+        function updateTimer() {
+            document.getElementById('timer').textContent = timeLeft;
+            
+            // Color timer based on remaining time
+            const timerEl = document.getElementById('timer');
+            if (timeLeft <= 5) {
+                timerEl.style.color = '#ff4444';
+                timerEl.style.textShadow = '0 0 30px #ff4444';
+            } else if (timeLeft <= 10) {
+                timerEl.style.color = '#ffaa00';
+                timerEl.style.textShadow = '0 0 30px #ffaa00';
+            } else {
+                timerEl.style.color = '#ffd700';
+                timerEl.style.textShadow = '0 0 30px #ffd700';
+            }
+        }
+
+        // Allow Enter key for login
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') {
+                login();
+            }
+        });
+
+        // Initial prediction
+        setTimeout(() => {
+            if (isLoggedIn) {
+                startRound();
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
