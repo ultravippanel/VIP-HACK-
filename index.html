@@ -7,80 +7,70 @@
 
 <style>
 body {
-    background: #0a0a0a;
+    background: #000;
     font-family: Arial;
     color: white;
     text-align: center;
 }
 
-/* Header */
 h1 {
     color: gold;
     margin-top: 20px;
 }
 
-/* Input */
 input, select {
-    width: 80%;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 8px;
+    width: 85%;
+    padding: 12px;
+    margin: 8px;
+    border-radius: 10px;
     border: none;
+    font-size: 16px;
 }
 
-/* Button */
 button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background: red;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: bold;
+    margin-top: 10px;
 }
 
-/* 🔥 VIP RESULT BOX */
+/* 🔥 RESULT BOX */
 .result-box {
     margin: 30px auto;
-    width: 300px;
-    padding: 20px;
+    width: 90%;
+    max-width: 320px;
+    padding: 25px;
     border-radius: 15px;
     background: #0d0d0d;
     border: 2px solid red;
 
-    /* Glow effect */
-    box-shadow: 0 0 20px red, 0 0 40px red;
+    box-shadow: 0 0 25px red, 0 0 60px red;
 }
 
-/* Title */
 .result-title {
     color: gold;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-/* Main result */
-.result-main {
-    font-size: 30px;
-    color: yellow;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-/* Confidence */
-.confidence {
-    font-size: 14px;
+#prd {
+    margin-bottom: 10px;
     color: #ccc;
 }
 
-/* NEXT button */
-.NEXT-btn {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
-    background: black;
-    border: 1px solid red;
-    color: white;
-    border-radius: 10px;
+.result-main {
+    font-size: 32px;
+    color: yellow;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.confidence {
+    font-size: 14px;
+    color: #aaa;
 }
 </style>
 
@@ -92,14 +82,13 @@ button {
 
 <input type="text" id="period" placeholder="Enter Period">
 <select id="bs">
-    <option>BIGG</option>
     <option>SMALL</option>
+    <option>BIG</option>
 </select>
 <input type="number" id="num" placeholder="Enter Number">
 
 <button onclick="showResult()">UPLOAD</button>
 
-<!-- 🔥 Stylish Result Box -->
 <div class="result-box">
     <div class="result-title">VIP NUMBER PANEL</div>
     <div id="prd">PRD --</div>
@@ -111,8 +100,6 @@ button {
     <div class="confidence" id="conf">
         Confidence --%
     </div>
-
-    <button class="scan-btn">SCAN</button>
 </div>
 
 <script>
@@ -124,7 +111,6 @@ function showResult() {
     document.getElementById("prd").innerHTML = "PRD " + p;
     document.getElementById("result").innerHTML = bs + " " + num;
 
-    // Random confidence
     let conf = Math.floor(Math.random() * 5) + 95;
     document.getElementById("conf").innerHTML = "Confidence " + conf + "%";
 }
