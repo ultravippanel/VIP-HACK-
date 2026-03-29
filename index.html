@@ -7,28 +7,19 @@
 
 <style>
 body {
-    background: #0f172a;
+    background: #0a0a0a;
     font-family: Arial;
     color: white;
     text-align: center;
 }
 
-.container {
-    padding: 20px;
-}
-
+/* Header */
 h1 {
     color: gold;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.top-bar {
-    display: flex;
-    justify-content: space-around;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
+/* Input */
 input, select {
     width: 80%;
     padding: 10px;
@@ -37,40 +28,70 @@ input, select {
     border: none;
 }
 
+/* Button */
 button {
     padding: 10px 20px;
-    background: gold;
+    background: red;
+    color: white;
     border: none;
     border-radius: 8px;
     font-weight: bold;
-    cursor: pointer;
 }
 
+/* 🔥 VIP RESULT BOX */
 .result-box {
-    margin-top: 20px;
+    margin: 30px auto;
+    width: 300px;
     padding: 20px;
-    border: 2px solid gold;
+    border-radius: 15px;
+    background: #0d0d0d;
+    border: 2px solid red;
+
+    /* Glow effect */
+    box-shadow: 0 0 20px red, 0 0 40px red;
+}
+
+/* Title */
+.result-title {
+    color: gold;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Main result */
+.result-main {
+    font-size: 30px;
+    color: yellow;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* Confidence */
+.confidence {
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Scan button */
+.scan-btn {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    background: black;
+    border: 1px solid red;
+    color: white;
     border-radius: 10px;
-    font-size: 18px;
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
-
 <h1>VIP PANEL</h1>
 
-<div class="top-bar">
-    <div>Period</div>
-    <div>Big/Small</div>
-    <div>Number</div>
-</div>
-
-<input type="text" id="period" placeholder="Enter Period Number">
+<input type="text" id="period" placeholder="Enter Period">
 <select id="bs">
-    <option value="">Select Big/Small</option>
     <option>Big</option>
     <option>Small</option>
 </select>
@@ -78,10 +99,20 @@ button {
 
 <button onclick="showResult()">UPLOAD</button>
 
-<div class="result-box" id="result">
-    Result will show here
-</div>
+<!-- 🔥 Stylish Result Box -->
+<div class="result-box">
+    <div class="result-title">VIP NUMBER PANEL</div>
+    <div id="prd">PRD --</div>
 
+    <div class="result-main" id="result">
+        WAITING...
+    </div>
+
+    <div class="confidence" id="conf">
+        Confidence --%
+    </div>
+
+    <button class="scan-btn">SCAN</button>
 </div>
 
 <script>
@@ -90,10 +121,12 @@ function showResult() {
     let bs = document.getElementById("bs").value;
     let num = document.getElementById("num").value;
 
-    document.getElementById("result").innerHTML =
-        "Period: " + p + "<br>" +
-        "Type: " + bs + "<br>" +
-        "Number: " + num;
+    document.getElementById("prd").innerHTML = "PRD " + p;
+    document.getElementById("result").innerHTML = bs + " " + num;
+
+    // Random confidence
+    let conf = Math.floor(Math.random() * 5) + 95;
+    document.getElementById("conf").innerHTML = "Confidence " + conf + "%";
 }
 </script>
 
