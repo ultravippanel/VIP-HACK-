@@ -1,459 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Color Trading Prediction Panel</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sure Shot Pro</title>
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#0c0c2b,#1a1a40);
+  color:white;
+  text-align:center;
+}
 
-        /* Login Page */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0c0c0c 70%);
-        }
+/* LOGIN */
+.login-box{
+  width:90%;
+  margin:100px auto;
+  background:white;
+  color:black;
+  padding:25px;
+  border-radius:20px;
+}
+input{
+  width:90%;
+  padding:12px;
+  margin:10px;
+  border-radius:10px;
+}
+button{
+  width:90%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:25px;
+  background:#6a5cff;
+  color:white;
+}
 
-        .login-box {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 3rem 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            border: 2px solid #ffd700;
-            backdrop-filter: blur(10px);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
+/* DASHBOARD */
+.game{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  padding:20px;
+}
+.game button{
+  padding:20px;
+  border-radius:15px;
+  background:white;
+  color:black;
+  font-weight:bold;
+}
 
-        @keyframes glow {
-            from { box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3); }
-            to { box-shadow: 0 25px 50px rgba(255, 215, 0, 0.6); }
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            color: #ffd700;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 20px #ffd700;
-            font-weight: bold;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #ffd700, #ffed4a);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Dashboard */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            color: #ffd700;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 30px #ffd700;
-        }
-
-        .header p {
-            color: #ccc;
-            font-size: 1.2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-card:hover {
-            border-color: #ffd700;
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
-        }
-
-        .stat-value {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #00ff00; /* GREEN */
-    text-shadow: 0 0 10px #00ff00;
-        }
-        .stat-label {
-            color: #ccc;
-            font-size: 1.1rem;
-        }
-
-        .red { color: #ff4444; text-shadow: 0 0 20px #ff4444; }
-        .green { color: #44ff44; text-shadow: 0 0 20px #44ff44; }
-        .violet { color: #aa44ff; text-shadow: 0 0 20px #aa44ff; }
-
-        .timer {
-            font-size: 4rem;
-            font-weight: bold;
-            text-align: center;
-            margin: 2rem 0;
-            color: #ffd700;
-            text-shadow: 0 0 30px #ffd700;
-        }
-
-        .prediction-panel {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 3rem;
-            border-radius: 25px;
-            border: 3px solid #ffd700;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(15px);
-        }
-
-        .prediction-display {
-            font-size: 6rem;
-            font-weight: bold;
-            text-align: center;
-            margin: 2rem 0;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            transition: all 0.5s ease;
-        }
-
-        .logout-btn {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffd700;
-            border: 2px solid #ffd700;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: #ffd700;
-            color: #000;
-            transform: scale(1.05);
-        }
-
-        .prime-badge {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            margin-top: 1rem;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @media (max-width: 768px) {
-            .prediction-display { font-size: 4rem; }
-            .timer { font-size: 3rem; }
-            .header h1 { font-size: 2rem; }
-        }
-    </style>
+/* HIDE */
+.page{display:none;}
+</style>
 </head>
+
 <body>
-    <!-- Login Page -->
-    <div class="login-container" id="loginPage">
-        <div class="login-box">
-            <div class="logo">VIP TRADING</div>
-            <div class="input-group">
-                <input type="text" id="username" placeholder="Username" maxlength="20">
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Password" maxlength="20">
-            </div>
-            <button class="login-btn" onclick="login()">VIP ACCESS</button>
-        </div>
-    </div>
 
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard">
-        <button class="logout-btn" onclick="logout()">LOGOUT</button>
-        
-        <div class="header">
-            <h1>VIP COLOR PREDICTION</h1>
-            <p>Real-time Trading Signals • 30s Cycle</p>
-        </div>
+<!-- LOGIN PAGE -->
+<div id="login" class="page" style="display:block;">
+  <div class="login-box">
+    <h2>WELCOME BACK</h2>
+    <input placeholder="Phone">
+    <input placeholder="Password">
+    <button onclick="goDashboard()">LOGIN</button>
+  </div>
+</div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="currentNumber">-</div>
-                <div class="stat-label">CURRENT NUMBER</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="currentColor">-</div>
-                <div class="stat-label">RESULT COLOR</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalRounds">0</div>
-                <div class="stat-label">TOTAL ROUNDS</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="accuracy">100%</div>
-                <div class="stat-label">PREDICTION ACCURACY</div>
-            </div>
-        </div>
+<!-- DASHBOARD -->
+<div id="dashboard" class="page">
+  <h2>SELECT GAME</h2>
+  <div class="game">
+    <button onclick="openGame()">91 Club</button>
+    <button onclick="openGame()">Tiranga</button>
+  </div>
+</div>
 
-        <div class="timer" id="timer">30</div>
+<!-- GAME -->
+<div id="game" class="page">
+  <h2>WinGo 1 Minute</h2>
 
-        <div class="prediction-panel">
-            <div id="predictionText">Waiting for next round...</div>
-            <div class="prediction-display" id="predictionDisplay">
-                🎯 NEXT PREDICTION
-            </div>
-            <div id="primeIndicator" style="text-align: center;"></div>
-        </div>
-    </div>
+  <h1 id="timer">60</h1>
+  <h3 id="result">Result: ?</h3>
 
-    <script>
-        let timeLeft = 30;
-        let isLoggedIn = false;
-        let totalRounds = 0;
-        let correctPredictions = 0;
-        let currentGameNumber = 0;
-        let nextPrediction = '';
-        let intervalId;
-        let gameIntervalId;
+  <button onclick="startGame()">Start</button>
 
-        // Demo credentials
-        const demoCredentials = {
-            'vipuser': 'vip123',
-            'admin': 'admin123',
-            'trader': 'trade456'
-        };
+  <br><br>
+  <button onclick="goPayment()">GET VIP ₹850</button>
+</div>
 
-        function login() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
+<!-- PAYMENT -->
+<div id="payment" class="page">
+  <h2>Scan & Pay ₹850</h2>
 
-            if (demoCredentials[username] && demoCredentials[username] === password) {
-                isLoggedIn = true;
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                startGame();
-            } else {
-                alert('❌ Invalid credentials! Try: vipuser/vip123, admin/admin123, trader/trade456');
-            }
-        }
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay">
 
-        function logout() {
-            isLoggedIn = false;
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            clearInterval(intervalId);
-            clearInterval(gameIntervalId);
-        }
+  <p>After payment contact admin</p>
 
-        function isPrime(n) {
-            if (n <= 1) return false;
-            if (n <= 3) return true;
-            if (n % 2 === 0 || n % 3 === 0) return false;
-            for (let i = 5; i * i <= n; i += 6) {
-                if (n % i === 0 || n % (i + 2) === 0) return false;
-            }
-            return true;
-        }
+  <button onclick="backGame()">Back</button>
+</div>
 
-        function getRandomNumber() {
-            return Math.floor(Math.random() * 10);
-        }
+<script>
 
-        function getColor(number) {
-            if (number === 0 || number === 5) return 'VIOLET';
-            if ([1, 3, 7, 9].includes(number)) return 'RED';
-            return 'GREEN';
-        }
+/* PAGE SWITCH */
+function show(page){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  document.getElementById(page).style.display='block';
+}
 
-        function generatePrediction() {
-            const possibilities = ['RED', 'GREEN', 'VIOLET'];
-            return possibilities[Math.floor(Math.random() * 3)];
-        }
+function goDashboard(){ show('dashboard'); }
+function openGame(){ show('game'); }
+function goPayment(){ show('payment'); }
+function backGame(){ show('game'); }
 
-        function updateDisplay() {
-            const display = document.getElementById('predictionDisplay');
-            const predictionText = document.getElementById('predictionText');
-            const primeIndicator = document.getElementById('primeIndicator');
+/* TIMER */
+let time = 60;
+let interval;
 
-            // Show prediction with animation
-            display.textContent = nextPrediction;
-            display.className = 'prediction-display';
-            
-            if (nextPrediction === 'RED') {
-                display.classList.add('red');
-                predictionText.textContent = '🔴 PREDICTED: RED';
-            } else if (nextPrediction === 'GREEN') {
-                display.classList.add('green');
-                predictionText.textContent = '🟢 PREDICTED: GREEN';
-            } else {
-                display.classList.add('violet');
-                predictionText.textContent = '🟣 PREDICTED: VIOLET';
-            }
+function startGame(){
+  clearInterval(interval);
+  interval = setInterval(()=>{
+    time--;
+    document.getElementById("timer").innerText = time;
 
-            // Check if prime
-            if (isPrime(currentGameNumber)) {
-                primeIndicator.innerHTML = '<div class="prime-badge">⭐ PRIME NUMBER DETECTED ⭐</div>';
-            } else {
-                primeIndicator.innerHTML = '';
-            }
-        }
+    if(time <= 0){
+      clearInterval(interval);
+      generateResult();
+      time = 60;
+      setTimeout(startGame,1000);
+    }
+  },1000);
+}
 
-        function startRound() {
-            // Generate new game number and prediction
-            currentGameNumber = getRandomNumber();
-            const actualColor = getColor(currentGameNumber);
-            
-            // Generate prediction (random for demo)
-            nextPrediction = generatePrediction();
-            
-            // Update displays
-            document.getElementById('currentNumber').textContent = currentGameNumber;
-            document.getElementById('currentColor').textContent = actualColor;
-            document.getElementById('totalRounds').textContent = ++totalRounds;
+/* RESULT */
+function generateResult(){
+  let number = Math.floor(Math.random()*10);
 
-            // Check prediction accuracy
-            if (nextPrediction === actualColor) {
-                correctPredictions++;
-            }
-            const accuracy = totalRounds > 0 ? Math.round((correctPredictions / totalRounds) * 100) : 100;
-            document.getElementById('accuracy').textContent = accuracy + '%';
+  let color="";
+  if(number<=4){color="GREEN";}
+  else if(number<=8){color="RED";}
+  else{color="VIOLET";}
 
-            updateDisplay();
-        }
+  document.getElementById("result").innerText =
+    "Result: "+number+" ("+color+")";
+}
 
-        function startGame() {
-            timeLeft = 30;
-            updateTimer();
-            intervalId = setInterval(() => {
-                timeLeft--;
-                updateTimer();
-                
-                if (timeLeft <= 0) {
-                    timeLeft = 30;
-                    startRound();
-                }
-            }, 1000);
+</script>
 
-            // Auto refresh every 30 seconds
-            gameIntervalId = setInterval(startRound, 30000);
-        }
-
-        function updateTimer() {
-            document.getElementById('timer').textContent = timeLeft;
-            
-            // Color timer based on remaining time
-            const timerEl = document.getElementById('timer');
-            if (timeLeft <= 5) {
-                timerEl.style.color = '#ff4444';
-                timerEl.style.textShadow = '0 0 30px #ff4444';
-            } else if (timeLeft <= 10) {
-                timerEl.style.color = '#ffaa00';
-                timerEl.style.textShadow = '0 0 30px #ffaa00';
-            } else {
-                timerEl.style.color = '#ffd700';
-                timerEl.style.textShadow = '0 0 30px #ffd700';
-            }
-        }
-
-        // Allow Enter key for login
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') {
-                login();
-            }
-        });
-
-        // Initial prediction
-        setTimeout(() => {
-            if (isLoggedIn) {
-                startRound();
-            }
-        }, 1000);
-    </script>
 </body>
 </html>
