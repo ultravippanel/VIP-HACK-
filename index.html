@@ -5,11 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIP PANEL</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
 <style>
+
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #000;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #000, #1a1a1a);
     color: white;
     display: flex;
     justify-content: center;
@@ -17,79 +20,119 @@ body {
     height: 100vh;
 }
 
+/* Glass UI */
 .container {
-    width: 340px;
-    background: #111;
+    width: 350px;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0 0 25px rgba(255,0,0,0.4);
     text-align: center;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(255,0,0,0.3);
 }
 
 h2 {
     color: gold;
-    margin-bottom: 20px;
+    text-shadow: 0 0 10px gold;
 }
 
+/* Buttons */
 .main-btn, .unlock-btn {
     width: 100%;
     padding: 14px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    margin-bottom: 12px;
+    border-radius: 12px;
     border: none;
     color: white;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.main-btn { background: #222; }
-.unlock-btn { background: red; font-weight: bold; }
+.main-btn {
+    background: #222;
+}
 
+.unlock-btn {
+    background: linear-gradient(45deg, red, orange);
+    box-shadow: 0 0 20px red;
+}
+
+.unlock-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Overlay */
 .overlay {
     position: fixed;
     bottom: -100%;
     left: 0;
     width: 100%;
-    height: 75%;
-    background: #111;
-    transition: 0.3s;
+    height: 80%;
+    background: rgba(0,0,0,0.95);
+    transition: 0.4s;
     overflow-y: auto;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .overlay.active { bottom: 0; }
 
 .server {
-    padding: 18px;
+    padding: 16px;
     border-bottom: 1px solid #333;
     display: flex;
     justify-content: space-between;
 }
 
-.payment {
-    display: none;
+.server:hover {
+    background: rgba(255,0,0,0.2);
 }
 
+/* Payment */
 .amount {
-    font-size: 22px;
-    color: red;
+    font-size: 30px;
+    color: lime;
     font-weight: bold;
 }
 
+/* Loader */
+.loader {
+    display: none;
+    margin-top: 15px;
+}
+
+.loader div {
+    width: 10px;
+    height: 10px;
+    background: red;
+    display: inline-block;
+    margin: 3px;
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+}
+
+.loader div:nth-child(2) { animation-delay: 0.2s; }
+.loader div:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+}
+
+/* Success */
 .success {
     display: none;
     margin-top: 20px;
     color: lime;
-    animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
 </style>
-
 </head>
 
 <body>
 
+<!-- MAIN -->
 <div class="container" id="main">
     <h2>👑 VIP PANEL</h2>
 
@@ -98,7 +141,9 @@ h2 {
     <button class="unlock-btn" onclick="startNow()">UNLOCK 🔓</button>
 </div>
 
+<!-- ALL SERVERS -->
 <div class="overlay" id="popup">
+
     <div class="server">91CLUB <input type="radio" name="srv" value="91CLUB"></div>
     <div class="server">51GAME <input type="radio" name="srv" value="51GAME"></div>
     <div class="server">TIRANGA <input type="radio" name="srv" value="TIRANGA"></div>
@@ -113,18 +158,23 @@ h2 {
     <div class="server">TASHAN WIN <input type="radio" name="srv" value="TASHAN WIN"></div>
     <div class="server">SIKKIM GAME <input type="radio" name="srv" value="SIKKIM GAME"></div>
     <div class="server">GOA GAME <input type="radio" name="srv" value="GOA GAME"></div>
+
 </div>
 
-<div class="container payment" id="payment">
+<!-- PAYMENT -->
+<div class="container" id="payment" style="display:none;">
     <h2>💳 Payment</h2>
-    <div class="amount">₹199</div>
+    <div class="amount">₹999</div>
 
     <button class="unlock-btn" onclick="payNow()">PAY NOW</button>
+
+    <div class="loader" id="loader">
+        <div></div><div></div><div></div>
+    </div>
 
     <div class="success" id="successBox">
         <h3>Payment Successful ✅</h3>
 
-        <!-- WhatsApp Button -->
         <a id="waBtn" target="_blank">
             <button class="unlock-btn">📸 SEND SCREENSHOT</button>
         </a>
@@ -133,10 +183,12 @@ h2 {
 
 <script>
 
+// popup
 function openPopup() {
     document.getElementById("popup").classList.add("active");
 }
 
+// select server
 document.querySelectorAll('input[name="srv"]').forEach(radio => {
     radio.addEventListener("change", function() {
         document.getElementById("serverBtn").innerText = this.value;
@@ -144,6 +196,7 @@ document.querySelectorAll('input[name="srv"]').forEach(radio => {
     });
 });
 
+// start
 function startNow() {
     let selected = document.getElementById("serverBtn").innerText;
 
@@ -155,18 +208,22 @@ function startNow() {
     }
 }
 
+// payment
 function payNow() {
 
     let selected = document.getElementById("serverBtn").innerText;
 
-    let upi = "upi://pay?pa=apexprime@jio&pn=VIP&am=199&cu=INR";
+    let upi = "upi://pay?pa=apexprime@jio&pn=VIP&am=999&cu=INR";
     window.location.href = upi;
+
+    document.getElementById("loader").style.display = "block";
 
     setTimeout(() => {
 
+        document.getElementById("loader").style.display = "none";
         document.getElementById("successBox").style.display = "block";
 
-        let msg = encodeURIComponent("Hello, I have completed payment for " + selected + ". Here is my screenshot.");
+        let msg = encodeURIComponent("Payment done for " + selected);
 
         document.getElementById("waBtn").href =
         "https://wa.me/918515876235?text=" + msg;
