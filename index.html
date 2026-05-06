@@ -1,1 +1,81 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Predictor UI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+  background: black;
+  overflow-x: hidden;
+}.glow { box-shadow: 0 0 20px #00ff66; }
 
+.wave span { display: inline-block; width: 4px; margin: 2px; background: #00ff66; animation: wave 1s infinite ease-in-out; }
+
+.wave span:nth-child(1) { height: 20px; animation-delay: 0s; } .wave span:nth-child(2) { height: 35px; animation-delay: 0.2s; } .wave span:nth-child(3) { height: 25px; animation-delay: 0.4s; } .wave span:nth-child(4) { height: 40px; animation-delay: 0.6s; } .wave span:nth-child(5) { height: 28px; animation-delay: 0.8s; }
+
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.8); } } </style>
+
+</head>
+<body class="flex justify-center items-center min-h-screen p-4"><div class="w-full max-w-sm border border-green-500 rounded-3xl p-5 text-white relative bg-black glow">  <div class="flex justify-between items-center mb-5">
+    <div class="text-3xl">☰</div>
+    <h1 class="text-3xl font-bold">PREDICTOR</h1>
+    <div class="text-2xl">⋮</div>
+  </div>  <div class="text-center">
+    <img src="https://cdn-icons-png.flaticon.com/512/3522/3522093.png"
+    class="w-40 mx-auto mb-4 drop-shadow-[0_0_20px_#00ff66]"><h2 class="text-5xl font-bold text-green-400 mb-4">PREDICTOR</h2>
+
+<p class="tracking-[4px] text-gray-300 text-sm leading-7 mb-6">
+  ALL GAMES CONNECTED<br>
+  DIRECT API SERVER
+</p>
+
+  </div>  <div class="border border-green-500 rounded-2xl p-4 mb-5 bg-green-500/5">
+    <div class="flex justify-between items-center">
+      <div>
+        <h3 class="text-green-400 text-xl font-bold">SYSTEM ONLINE</h3>
+        <p class="text-gray-300">All services running</p>
+      </div><div class="wave">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+  </div>  <div class="border border-green-500 rounded-2xl p-5 mb-5 bg-green-500/5">
+    <h3 class="text-2xl mb-5">PERFORMANCE</h3><div class="grid grid-cols-3 text-center gap-3">
+  <div>
+    <p class="text-gray-400">PING</p>
+    <h4 id="ping" class="text-green-400 text-3xl font-bold">23ms</h4>
+  </div>
+
+  <div>
+    <p class="text-gray-400">UPTIME</p>
+    <h4 id="uptime" class="text-green-400 text-3xl font-bold">99.9%</h4>
+  </div>
+
+  <div>
+    <p class="text-gray-400">PLAYERS</p>
+    <h4 id="players" class="text-green-400 text-3xl font-bold">12.7K</h4>
+  </div>
+</div>
+
+  </div>  <button class="w-full border border-green-500 rounded-2xl py-4 text-3xl text-green-400 mb-5 hover:bg-green-500/10 transition glow">
+    ACTIVATE ▶
+  </button>  <a href="https://t.me/+bQmuA4xDeOQyMmFl" target="_blank">
+    <button class="w-full border border-green-500 rounded-2xl py-4 text-2xl hover:bg-green-500/10 transition">
+      JOIN CHANNEL 📢
+    </button>
+  </a></div><script>
+function updateStats() {
+  document.getElementById('ping').innerText =
+    Math.floor(Math.random() * 30 + 10) + 'ms';
+
+  document.getElementById('uptime').innerText =
+    (99 + Math.random()).toFixed(2) + '%';
+
+  let players = (Math.random() * 10 + 10).toFixed(1);
+  document.getElementById('players').innerText = players + 'K';
+}
+
+setInterval(updateStats, 1500);
+</script></body>
+</html>
