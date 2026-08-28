@@ -1,682 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIP PANEL</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-body{
-    background:#f5f7ff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    padding:20px;
-}
-
-.container{
-    width:100%;
-    max-width:420px;
-}
-
-/* CARD */
-
-.card{
-    background:#fff;
-    border-radius:25px;
-    padding:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
-}
-
-/* TITLE */
-
-.main-title{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.main-title h1{
-    font-size:55px;
-    font-weight:900;
-    background:linear-gradient(to bottom,#4ea1ff,#003cff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-.main-title p{
-    margin-top:10px;
-    color:#0055ff;
-    letter-spacing:5px;
-    font-size:18px;
-}
-
-/* HOME PAGE */
-
-#homePage{
-    display:none;
-}
-
-/* INPUT */
-
-.input-box{
-    border:2px solid #eef0f8;
-    border-radius:15px;
-    padding:18px;
-    margin-bottom:20px;
-}
-
-.input-box label{
-    display:block;
-    margin-bottom:10px;
-    color:#777;
-    font-weight:bold;
-}
-
-.input-box input,
-.input-box select{
-    width:100%;
-    padding:14px;
-    border:none;
-    outline:none;
-    font-size:20px;
-    background:#f7f8ff;
-    border-radius:10px;
-}
-
-/* BUTTON */
-
-.btn{
-    width:100%;
-    padding:18px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(to right,#004cff,#3a8cff);
-    color:#fff;
-    font-size:20px;
-    font-weight:bold;
-    cursor:pointer;
-    margin-top:15px;
-}
-
-/* PANEL */
-
-.box{
-    background:#fff;
-    border-radius:25px;
-    padding:25px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.07);
-    margin-bottom:20px;
-}
-
-/* TIMER */
-
-.timer-wrapper{
-    text-align:center;
-    margin-bottom:18px;
-}
-
-.timer-title{
-    font-size:16px;
-    font-weight:bold;
-    color:#111;
-    margin-bottom:8px;
-}
-
-.timer-box{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:5px;
-}
-
-.time-card{
-    width:38px;
-    height:60px;
-    background:#16164a;
-    color:white;
-    font-size:40px;
-    font-weight:bold;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    clip-path:polygon(
-        0 0,
-        100% 0,
-        100% 82%,
-        86% 100%,
-        0 100%
-    );
-    border-radius:5px;
-}
-
-.colon{
-    font-size:38px;
-    font-weight:bold;
-    color:#16164a;
-}
-
-/* PERIOD */
-
-.period-box{
-    width:170px;
-    margin:auto;
-    text-align:center;
-    background:#f4f6ff;
-    padding:10px 14px;
-    border-radius:12px;
-    font-weight:bold;
-    margin-bottom:20px;
-    color:#0055ff;
-}
-
-/* PREDICTION */
-
-.circle{
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    background:#eef2ff;
-    margin:15px auto;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
-
-.circle span{
-    color:#0055ff;
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.circle h1{
-    font-size:62px;
-    color:#0055ff;
-}
-
-/* NUMBER */
-
-.number-box{
-    width:150px;
-    margin:auto;
-    background:linear-gradient(to right,#004cff,#3a8cff);
-    color:white;
-    padding:12px;
-    text-align:center;
-    border-radius:12px;
-    font-size:24px;
-    font-weight:bold;
-}
-
-/* TELEGRAM */
-
-.telegram-box{
-    width:100%;
-    padding:12px;
-    border-radius:16px;
-    margin-top:10px;
-    margin-bottom:15px;
-    background:#ffffff;
-    border:2px solid #e5e7ff;
-    box-shadow:0 5px 15px rgba(0,0,0,0.05);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.telegram-link{
-    width:65px;
-    height:65px;
-    border-radius:18px;
-    background:linear-gradient(to bottom,#38bdf8,#0284c7);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-decoration:none;
-}
-
-.telegram-link i{
-    color:white;
-    font-size:32px;
-}
-
-/* LOADING */
-
-#loadingScreen{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:#f5f7ff;
-    z-index:9999;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-}
-
-.loader{
-    width:70px;
-    height:70px;
-    border:8px solid #dbe7ff;
-    border-top:8px solid #0055ff;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-}
-
-.loading-text{
-    margin-top:25px;
-    color:#0055ff;
-    font-size:28px;
-    font-weight:bold;
-}
-
-@keyframes spin{
-
-0%{
-transform:rotate(0deg);
-}
-
-100%{
-transform:rotate(360deg);
-}
-
-}
-
-/* POPUP */
-
-.popup{
-    position:fixed;
-    top:-120px;
-    left:50%;
-    transform:translateX(-50%);
-    background:white;
-    padding:18px 25px;
-    border-radius:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
-    display:flex;
-    align-items:center;
-    gap:12px;
-    z-index:99999;
-    transition:0.4s;
-}
-
-.popup.show{
-    top:30px;
-}
-
-.popup i{
-    color:red;
-    font-size:28px;
-}
-
-.popup span{
-    font-size:18px;
-    font-weight:bold;
-    color:#222;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- POPUP -->
-
-<div class="popup" id="popup">
-
-<i class="fa-solid fa-circle-xmark"></i>
-
-<span>WRONG PASSWORD</span>
-
-</div>
-
-<!-- LOADING -->
-
-<div id="loadingScreen">
-
-<div class="loader"></div>
-
-<div class="loading-text">
-LOADING...
-</div>
-
-</div>
-
-<div class="container">
-
-<!-- LOCK SCREEN -->
-
-<div class="card" id="lockScreen">
-
-<div class="main-title">
-<h1>LOCK</h1>
-<p>ENTER PANEL</p>
-</div>
-
-<div class="input-box">
-<label>Username</label>
-
-<input type="text"
-id="username"
-placeholder="Enter Username">
-
-</div>
-
-<div class="input-box">
-<label>Password</label>
-
-<input type="password"
-id="password"
-placeholder="Enter Password">
-
-</div>
-
-<button class="btn"
-onclick="unlockPanel()">
-
-UNLOCK
-
-</button>
-
-</div>
-
-<!-- HOME PAGE -->
-
-<div class="card" id="homePage">
-
-<div class="main-title">
-<h1>VIP PANEL</h1>
-<p>GOD_X TRADER'S</p>
-</div>
-
-<div class="box">
-
-<div class="timer-wrapper">
-
-<div class="timer-title">
-Time remaining
-</div>
-
-<div class="timer-box">
-
-<div class="time-card" id="min1">0</div>
-<div class="time-card" id="min2">0</div>
-
-<div class="colon">:</div>
-
-<div class="time-card" id="sec1">5</div>
-<div class="time-card" id="sec2">9</div>
-
-</div>
-
-</div>
-
-<div class="period-box">
-PERIOD:
-<span id="periodText">333</span>
-</div>
-
-<div class="circle">
-<span>PREDICTION</span>
-<h1 id="bigSmallText">BIG</h1>
-</div>
-
-<div class="number-box">
-NUMBER:
-<span id="numberText">6</span>
-</div>
-
-</div>
-
-<!-- TELEGRAM -->
-
-<div class="telegram-box">
-
-<a href="https://t.me/+bQmuA4xDeOQyMmFl"
-target="_blank"
-class="telegram-link">
-
-<i class="fa-brands fa-telegram"></i>
-
-</a>
-
-</div>
-
-<button class="btn"
-onclick="openAdmin()">
-
-ADMIN PANEL
-
-</button>
-
-</div>
-
-<!-- ADMIN PAGE -->
-
-<div class="card"
-id="adminPage"
-style="display:none;">
-
-<div class="main-title">
-<h1>ADMIN</h1>
-<p>UPDATE PREDICTION</p>
-</div>
-
-<div class="input-box">
-<label>Period</label>
-
-<input type="text"
-id="periodInput"
-placeholder="Enter Period">
-
-</div>
-
-<div class="input-box">
-
-<label>BIG / SMALL</label>
-
-<select id="bigSmallInput">
-
-<option>BIG</option>
-<option>SMALL</option>
-
-</select>
-
-</div>
-
-<div class="input-box">
-
-<label>Number</label>
-
-<select id="numberInput">
-
-<option>0</option>
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<option>6</option>
-<option>7</option>
-<option>8</option>
-<option>9</option>
-
-</select>
-
-</div>
-
-<button class="btn"
-onclick="updateData()">
-
-UPDATE
-
-</button>
-
-<button class="btn"
-style="
-background:white;
-color:#0055ff;
-border:2px solid #dfe7ff;
-"
-onclick="closeAdmin()">
-
-BACK
-
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-/* UNLOCK */
-
-function unlockPanel(){
-
-    let username =
-    document.getElementById("username").value;
-
-    let password =
-    document.getElementById("password").value;
-
-    if(username === "TRADERX"
-    && password === "UNLOCK888"){
-
-        document.getElementById("loadingScreen")
-        .style.display="flex";
-
-        setTimeout(()=>{
-
-            document.getElementById("loadingScreen")
-            .style.display="none";
-
-            document.getElementById("lockScreen")
-            .style.display="none";
-
-            document.getElementById("homePage")
-            .style.display="block";
-
-        },2500);
-
-    }else{
-
-        let popup =
-        document.getElementById("popup");
-
-        popup.classList.add("show");
-
-        setTimeout(()=>{
-
-            popup.classList.remove("show");
-
-        },2500);
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YAARWIN - Wingo Prediction Tool</title>
+  <style>
+    :root{
+      --bg:#080a0d;
+      --card:#0d1014;
+      --card2:#11151a;
+      --red:#ef111b;
+      --red2:#ff252e;
+      --text:#f5f7fa;
+      --muted:#a5adb8;
+      --line:#292f37;
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+    body{
+      background:radial-gradient(circle at top,#171b21 0,#080a0d 52%,#030405 100%);
+      color:var(--text);
+      display:flex;
+      justify-content:center;
+      padding:16px;
+    }
+    .phone{
+      width:min(430px,100%);
+      overflow:hidden;
+      border-radius:34px;
+      background:linear-gradient(180deg,#0a0d10,#07090c);
+      border:1px solid #343a42;
+      box-shadow:0 25px 60px rgba(0,0,0,.55);
+    }
+    .topbar{
+      text-align:center;
+      padding:28px 18px 22px;
+      background:linear-gradient(145deg,#a90008 0%,#ef1018 48%,#680006 100%);
+      border-bottom:1px solid #3b0a0d;
+    }
+    .brand{
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:2px;
+      line-height:1;
+      text-shadow:0 3px 8px rgba(0,0,0,.25);
+    }
+    .subtitle{
+      margin-top:10px;
+      font-size:15px;
+      letter-spacing:1px;
+    }
+    .content{padding:14px}
+    .switcher{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+    .tab{
+      border:1px solid #3b414a;
+      border-radius:18px;
+      padding:14px 10px;
+      background:#0c1014;
+      color:#fff;
+      font-weight:800;
+      font-size:17px;
+      cursor:pointer;
+    }
+    .tab.active{
+      background:linear-gradient(135deg,#d90811,#ff1b25);
+      border-color:#ff3b42;
+      box-shadow:0 8px 22px rgba(239,17,27,.28);
+    }
+    .panel,.panel-mini,.small-card{
+      background:linear-gradient(145deg,#0c1014,#101419);
+      border:1px solid var(--line);
+      box-shadow:0 10px 26px rgba(0,0,0,.25);
+    }
+    .panel{
+      border-radius:var(--radius);
+      padding:18px;
+      margin-bottom:12px;
+    }
+    .issue-panel{
+      min-height:270px;
+      display:flex;
+      align-items:center;
+    }
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+    .panel-mini,.small-card{border-radius:12px;padding:7px 8px}
+    .panel-mini{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      text-align:center;
+    }
+    .panel-mini .label{
+      font-size:9px;
+      margin-bottom:3px;
+      letter-spacing:.5px;
+    }
+    .panel-mini .value{
+      font-size:11px;
+      line-height:1.1;
+    }
+    .panel-mini .timer{
+      font-size:18px;
+      letter-spacing:.5px;
+    }
+    .panel-mini .label[style]{
+      margin-top:5px !important;
+    }
+    .label{
+      color:var(--red2);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      margin-bottom:9px;
+    }
+    .value{font-size:18px;font-weight:850;line-height:1.2}
+    .big-value{
+      font-size:28px;
+      letter-spacing:1px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:clip;
+    }
+    .progress{
+      margin-top:16px;
+      height:10px;
+      background:#252a30;
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .fill{
+      height:100%;
+      width:100%;
+      background:linear-gradient(90deg,#cf0710,#ff2630);
+      border-radius:999px;
+      transition:width .25s linear;
+    }
+    .mode-strip{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
+    }
+    .mode-pill{
+      background:#7d0b11;
+      border:1px solid #e61a22;
+      color:#fff;
+      padding:7px 12px;
+      border-radius:12px;
+      font-weight:900;
+    }
+    .timer{
+      font-size:44px;
+      color:var(--red2);
+      line-height:1;
+      letter-spacing:1px;
+    }
+    .prediction{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 112px;
+      align-items:center;
+      gap:10px;
+      min-height:170px;
+    }
+    .big-prediction-text{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-width:0;
+      text-align:center;
+    }
+    .big-word{
+      font-size:64px;
+      line-height:.9;
+      font-weight:950;
+      letter-spacing:1px;
+      color:#fff;
+      text-shadow:0 0 14px rgba(239,17,27,.45);
+    }
+    .prediction-word{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top:12px;
+      font-size:17px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:3px;
+      color:#fff;
+      white-space:nowrap;
+      text-shadow:0 0 8px rgba(239,17,27,.35);
+    }
+    .prediction-word .line{
+      width:38px;
+      height:1px;
+      background:#ff1f29;
+      box-shadow:0 0 6px rgba(255,31,41,.8);
+      flex:0 0 auto;
+    }
+    .circle{
+      width:112px;height:112px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin-left:auto;
+      background:radial-gradient(circle at 35% 25%,#ff777d 0,#f52b34 28%,#b00008 68%,#650005 100%);
+      border:2px solid #ff4b51;
+      box-shadow:0 12px 28px rgba(239,17,27,.35);
+      font-size:58px;font-weight:900;
+    }
+    .small-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    .small-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:58px;padding:4px 7px}.small-card .value{font-size:17px}
+
+    .result-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:12px;
+      padding:16px 18px;
+      border-radius:22px;
+      background:linear-gradient(145deg,#140b0d,#0d1014);
+      border:1px solid #3a2225;
+      box-shadow:0 10px 26px rgba(0,0,0,.28);
+    }
+    .result-title{
+      font-size:19px;
+      font-weight:900;
+      color:#fff;
+    }
+    .result-value{
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:radial-gradient(circle at 35% 25%,#ff777d 0,#f52b34 30%,#a90008 70%,#650005 100%);
+      border:2px solid #ff4b51;
+      color:#fff;
+      font-size:36px;
+      font-weight:900;
+      box-shadow:0 8px 20px rgba(239,17,27,.30);
+    }
+    .telegram-box{
+      margin-top:12px;
+    }
+    .telegram-btn{
+      width:100%;
+      border:1px solid #ff3b42;
+      border-radius:14px;
+      padding:12px 16px;
+      background:linear-gradient(135deg,#d90811,#ff1b25);
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.5px;
+      cursor:pointer;
+      box-shadow:0 8px 22px rgba(239,17,27,.25);
+    }
+    .telegram-btn:active{
+      transform:scale(.99);
     }
 
-}
+    .result-locked{
+      position:relative;
+      overflow:hidden;
+    }
+    .result-locked .result-value{
+      user-select:none;
+    }
+    .active-btn{
+      margin-top:12px;
+      width:100%;
+      border:1px solid #ff3b42;
+      border-radius:14px;
+      padding:12px 16px;
+      background:linear-gradient(135deg,#d90811,#ff1b25);
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 8px 22px rgba(239,17,27,.25);
+    }
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(4px);
+      z-index:9999;
+    }
+    .modal-backdrop.show{display:flex}
+    .plan-modal{
+      width:min(380px,100%);
+      border:1px solid #3b414a;
+      border-radius:24px;
+      padding:20px;
+      background:linear-gradient(145deg,#0d1014,#171b21);
+      box-shadow:0 25px 60px rgba(0,0,0,.6);
+    }
+    .plan-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;
+    }
+    .plan-title{font-size:22px;font-weight:900}
+    .close-btn{
+      border:0;
+      width:36px;height:36px;
+      border-radius:50%;
+      background:#252a30;
+      color:#fff;
+      font-size:22px;
+      cursor:pointer;
+    }
+    .plan-list{display:grid;gap:10px}
+    .plan{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:15px 16px;
+      border:1px solid #363c44;
+      border-radius:16px;
+      background:#0b0e12;
+      color:#fff;
+      font-weight:800;
+    }
+    .plan-price{color:#ff3942;font-size:18px}
 
-/* OPEN ADMIN */
 
-function openAdmin(){
+    /* Locked prediction area */
+    .prediction-locked > div,
+    .prediction-locked .circle{
+      user-select:none;
+      filter:blur(14px); opacity:.72;
+    }
+    .prediction-locked{
+      position:relative;
+    }
 
-    document.getElementById("homePage")
-    .style.display="none";
+    /* Result area: blurred value + activation button */
+    .result-card{
+      flex-wrap:wrap;
+    }
+    .result-card .result-value{
+      user-select:none;
+      filter:blur(14px);
+      opacity:.72;
+    }
+    .result-card .active-btn{
+      flex:0 0 100%;
+      margin-top:0;
+    }
 
-    document.getElementById("adminPage")
-    .style.display="block";
+    @media(max-width:390px){
+      .brand{font-size:31px}
+      .big-value{font-size:23px}
+      .timer{font-size:38px}
+      .circle{width:94px;height:94px;font-size:49px}
+      .big-word{font-size:52px}
+      .prediction-word{font-size:13px;letter-spacing:2px;gap:6px}
+      .prediction-word .line{width:24px}
+    }
 
-}
+    .live-status{
+      color:#35e06f !important;
+      font-weight:900;
+      animation:liveBlink 1s ease-in-out infinite;
+      text-shadow:0 0 8px rgba(53,224,111,.35);
+    }
+    .live-status .live-dot,
+    .live-status .live-text{
+      color:#35e06f !important;
+    }
+    @keyframes liveBlink{
+      0%,100%{opacity:1}
+      50%{opacity:.25}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .live-status{animation:none}
+    }
+  
+    .active-page{
+      position:fixed;
+      inset:0;
+      display:none;
+      overflow-y:auto;
+      padding:18px;
+      background:radial-gradient(circle at top,#171b21 0,#080a0d 52%,#030405 100%);
+      z-index:10000;
+    }
+    .active-page.show{display:block}
+    .active-page-inner{
+      width:min(430px,100%);
+      min-height:calc(100vh - 36px);
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .active-page-card{
+      border:1px solid #343a42;
+      border-radius:30px;
+      padding:24px 18px;
+      background:linear-gradient(180deg,#0d1014,#07090c);
+      box-shadow:0 25px 60px rgba(0,0,0,.65);
+    }
+    .active-page-title{
+      text-align:center;
+      font-size:30px;
+      font-weight:950;
+      letter-spacing:1px;
+      margin-bottom:8px;
+    }
+    .active-page-subtitle{
+      text-align:center;
+      color:#a5adb8;
+      font-size:13px;
+      margin-bottom:22px;
+    }
+    .active-plans{display:grid;gap:11px}
+    .active-plan{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:17px;
+      border:1px solid #363c44;
+      border-radius:17px;
+      background:#0b0e12;
+      color:#fff;
+      font-weight:850;
+      font-size:17px;
+      cursor:pointer;
+      user-select:none;
+      transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .active-plan:active{
+      transform:scale(.98);
+    }
+    .active-plan.selected{
+      border-color:#ff3b42;
+      background:linear-gradient(135deg,#241014,#130c0e);
+      box-shadow:0 0 0 1px rgba(255,59,66,.2), 0 8px 22px rgba(239,17,27,.18);
+    }
+    .active-plan-price{color:#ff3942;font-size:18px}
+    .active-close{
+      width:100%;
+      margin-top:18px;
+      border:1px solid #ff3b42;
+      border-radius:14px;
+      padding:13px 16px;
+      background:linear-gradient(135deg,#d90811,#ff1b25);
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+    }
 
-/* CLOSE ADMIN */
 
-function closeAdmin(){
+    .payment-page{
+      position:fixed; inset:0; display:none; overflow-y:auto; padding:18px;
+      background:radial-gradient(circle at top,#171b21 0,#080a0d 52%,#030405 100%);
+      z-index:11000;
+    }
+    .payment-page.show{display:block}
+    .payment-inner{width:min(430px,100%);min-height:calc(100vh - 36px);margin:0 auto;display:flex;align-items:center;justify-content:center}
+    .payment-card{
+      width:100%; border:1px solid #343a42; border-radius:30px; padding:20px 16px;
+      background:linear-gradient(180deg,#0d1014,#07090c); box-shadow:0 25px 60px rgba(0,0,0,.65);
+    }
+    .payment-title{text-align:center;font-size:27px;font-weight:950;letter-spacing:1px;margin-bottom:6px}
+    .payment-subtitle{text-align:center;color:#a5adb8;font-size:13px;margin-bottom:16px}
+    .qr-wrap{background:#fff;border-radius:20px;padding:10px;display:flex;justify-content:center;align-items:center;margin-bottom:12px}
+    .qr-wrap img{width:100%;max-width:340px;aspect-ratio:1/1;object-fit:contain;display:block;border-radius:12px}
+    .upi-box{border:1px solid #363c44;border-radius:15px;background:#0b0e12;padding:13px;text-align:center;margin-bottom:14px;cursor:pointer;user-select:none;transition:.15s ease}
+    .upi-label{font-size:11px;color:#ff3942;font-weight:900;letter-spacing:1px;margin-bottom:5px}
+    .upi-id{font-size:18px;font-weight:900;word-break:break-all}.upi-box:active{transform:scale(.98);border-color:#ff3b42}.copy-hint{margin-top:6px;color:#a5adb8;font-size:11px;font-weight:700}
+    .pay-field{margin-bottom:12px}
+    .pay-field label{display:block;color:#ff3942;font-size:12px;font-weight:900;letter-spacing:.8px;margin-bottom:7px}
+    .pay-field input{
+      width:100%;padding:14px 13px;border-radius:14px;border:1px solid #363c44;
+      background:#0b0e12;color:#fff;outline:none;font-size:16px;
+    }
+    .pay-field input:focus{border-color:#ff3942;box-shadow:0 0 0 2px rgba(255,59,66,.12)}
+    .file-label{
+      display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;
+      border:1px solid #ff3b42;border-radius:14px;
+      background:linear-gradient(135deg,#d90811,#ff1b25);
+      color:#fff !important;font-size:16px;font-weight:950;letter-spacing:.4px;cursor:pointer;text-shadow:0 1px 3px rgba(0,0,0,.45);
+      box-shadow:0 8px 22px rgba(239,17,27,.25);
+      transition:transform .15s ease,filter .15s ease;
+    }
+    .file-label:active{transform:scale(.98);filter:brightness(.92)}
+    .file-label span{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:52px;color:#fff !important;opacity:1 !important;font-weight:950;text-align:center;line-height:1}.file-label input{display:none}
+    .file-name{display:none;margin-top:7px;text-align:center;color:#a5adb8;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .upload-btn{
+      width:100%;border:1px solid #ff3b42;border-radius:14px;padding:13px 16px;
+      background:linear-gradient(135deg,#d90811,#ff1b25);color:#fff;font-size:16px;font-weight:900;
+      cursor:pointer;box-shadow:0 8px 22px rgba(239,17,27,.25);margin-top:2px;
+    }
+    .back-btn{
+      width:100%;border:1px solid #363c44;border-radius:14px;padding:12px 16px;
+      background:#11151a;color:#fff;font-size:15px;font-weight:850;cursor:pointer;margin-top:9px;
+    }
+    .payment-note{text-align:center;color:#7f8995;font-size:11px;line-height:1.45;margin-top:10px}
+    .selected-plan-badge{text-align:center;color:#35e06f;font-weight:900;font-size:13px;margin-bottom:12px}
 
-    document.getElementById("adminPage")
-    .style.display="none";
 
-    document.getElementById("homePage")
-    .style.display="block";
+    .telegram-notify{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+      padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(7px);z-index:13000;
+    }
+    .telegram-notify.show{display:flex}
+    .telegram-notify-card{
+      position:relative;width:min(410px,100%);padding:25px 18px 18px;
+      border:1px solid #ff3038;border-radius:28px;
+      background:linear-gradient(180deg,#0d1014,#07090c);
+      box-shadow:0 0 0 1px rgba(255,31,41,.12),0 25px 70px rgba(0,0,0,.72);
+      text-align:center;animation:telegramPop .2s ease-out;
+    }
+    @keyframes telegramPop{
+      from{opacity:0;transform:scale(.94) translateY(8px)}
+      to{opacity:1;transform:scale(1) translateY(0)}
+    }
+    .telegram-notify-close{
+      position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;
+      border:1px solid #3c424a;background:#20252b;color:#fff;font-size:25px;
+      line-height:1;cursor:pointer;
+    }
+    .telegram-notify-icon{
+      width:66px;height:66px;margin:2px auto 13px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(145deg,#18b9f2,#078bd1);color:#fff;
+      font-size:31px;font-weight:900;transform:rotate(-12deg);
+      box-shadow:0 0 25px rgba(24,185,242,.28);
+    }
+    .telegram-notify-title{
+      font-size:25px;font-weight:950;letter-spacing:.7px;color:#fff;
+    }
+    .telegram-notify-line{
+      width:110px;height:3px;margin:11px auto 16px;border-radius:999px;
+      background:linear-gradient(90deg,#ef111b,#ff252e);
+      box-shadow:0 0 10px rgba(239,17,27,.55);
+    }
+    .telegram-notify-message{
+      border:1px solid #343a42;border-radius:18px;padding:17px 12px;
+      background:linear-gradient(145deg,#11151a,#0a0d10);
+      color:#f5f7fa;font-size:17px;line-height:1.55;
+    }
+    .telegram-notify-message b{font-weight:900}
+    .telegram-support{
+      display:inline-block;margin:9px 0 5px;padding:7px 13px;border:1px solid #ff3038;
+      border-radius:12px;color:#ffe900;background:#130c0e;font-size:19px;font-weight:950;
+      letter-spacing:.2px;
+    }
+    .telegram-notify-note{
+      margin:14px 2px 17px;padding:14px 12px;border:1px solid #4a2024;
+      border-radius:16px;background:linear-gradient(145deg,#180d0f,#0c0f13);
+      color:#fff;font-size:15px;line-height:1.5;
+    }
+    .telegram-notify-note strong{color:#ffe600;font-size:18px}
+    .telegram-notify-ok{
+      width:100%;border:1px solid #ff3b42;border-radius:14px;padding:13px 16px;
+      background:linear-gradient(135deg,#d90811,#ff1b25);color:#fff;
+      font-size:16px;font-weight:950;cursor:pointer;
+      box-shadow:0 8px 22px rgba(239,17,27,.25);
+    }
 
-}
+  </style>
 
-/* UPDATE DATA */
+<style>
+.telegram-support{cursor:pointer;user-select:none}
+.telegram-support:active{transform:scale(.97);filter:brightness(.9)}
+</style>
 
-function updateData(){
+</head>
+<body>
+  <div class="phone">
+    <div class="topbar">
+      <div class="brand">YAARWIN</div>
+      <div class="subtitle">WINGO PREDICTION TOOL</div>
+    </div>
 
-    let period =
-    document.getElementById("periodInput").value;
+    <div class="content">
+      <div class="switcher">
+        <button class="tab active" id="tab30s">30 SEC</button>
+        <button class="tab" id="tab1m">1 MIN</button>
+        <button class="tab" id="tab3m">3 MIN</button>
+        <button class="tab" id="tab5m">5 MIN</button>
+      </div>
 
-    let bigsmall =
-    document.getElementById("bigSmallInput").value;
+      <div class="panel">
+        <div class="label" id="modeLabel">30 SEC PERIOD NUMBER</div>
+        <div class="value big-value" id="periodNumber" aria-label="Period Number">—</div>
+        <div class="progress"><div class="fill" id="progressFill"></div></div>
+          <div class="mode-strip">
+            <div id="utcLine">UTC --:--:--</div>
+        </div>
+      </div>
 
-    let number =
-    document.getElementById("numberInput").value;
+      <div class="row">
+        <div class="panel-mini">
+          <div class="label">NEXT UPDATE</div>
+          <div class="value timer" id="countdown">00:00</div>
+        </div>
+        <div class="panel-mini">
+          <div class="label">LIVE STATUS</div>
+          <div class="value live-status" id="liveStatus"><span class="live-dot">●</span> <span class="live-text">LIVE</span></div>
+        </div>
+      </div>
 
-    document.getElementById("periodText")
-    .innerText = period;
+      <div class="panel issue-panel">
+        <div class="prediction prediction-locked">
+          <div class="big-prediction-text">
+            <div class="big-word">BIG</div>
+            <div class="prediction-word"><span class="line"></span>PREDICTION<span class="line"></span></div>
+          </div>
+          <div class="circle" id="predictCircle">3</div>
+        </div>
+      </div>
 
-    document.getElementById("bigSmallText")
-    .innerText = bigsmall;
-
-    document.getElementById("numberText")
-    .innerText = number;
-
-    closeAdmin();
-
-}
-
-/* TIMER */
-
-function updateCountdown(){
-
-    const now = new Date();
-
-    const seconds = 59 - now.getSeconds();
-
-    const mins = 0;
-
-    const minuteString =
-    String(mins).padStart(2,'0');
-
-    const secondString =
-    String(seconds).padStart(2,'0');
-
-    document.getElementById("min1").innerText =
-    minuteString[0];
-
-    document.getElementById("min2").innerText =
-    minuteString[1];
-
-    document.getElementById("sec1").innerText =
-    secondString[0];
-
-    document.getElementById("sec2").innerText =
-    secondString[1];
-
-}
-
-setInterval(updateCountdown,1000);
-
-updateCountdown();
-
-</script>
-
-</body>
-</html>
+      <div cla
